@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
@@ -9,12 +10,12 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useRef(null);
+  const pathname = usePathname();
+  const router = useRouter();
 
   // ✅ Scroll shadow effect
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -22,14 +23,34 @@ export default function Navbar() {
   // ✅ Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
+      if (menuRef.current && !menuRef.current.contains(event.target)) setIsOpen(false);
     };
     if (isOpen) document.addEventListener("mousedown", handleClickOutside);
     else document.removeEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
+
+  // ✅ Smooth scroll handler for section links
+  const handleNavClick = (e, href) => {
+    e.preventDefault();
+
+    if (href === "/") {
+      router.push("/");
+      return;
+    }
+
+    if (pathname !== "/") {
+      // redirect to home and pass section hash
+      router.push(`/${href}`);
+    } else {
+      const element = document.querySelector(href);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+
+    setIsOpen(false);
+  };
 
   const navLinks = [
     { name: "Home", href: "/" },
@@ -57,13 +78,14 @@ export default function Navbar() {
         {/* ✅ Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-10">
           {navLinks.map((link) => (
-            <Link
+            <a
               key={link.name}
               href={link.href}
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors"
+              onClick={(e) => handleNavClick(e, link.href)}
+              className="text-gray-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
             >
               {link.name}
-            </Link>
+            </a>
           ))}
           <div className="flex items-center space-x-3">
             <Link
@@ -109,14 +131,14 @@ export default function Navbar() {
             className="absolute top-[65px] left-0 right-0 mx-4 bg-white shadow-lg rounded-2xl p-6 space-y-5 md:hidden border border-gray-100"
           >
             {navLinks.map((link) => (
-              <Link
+              <a
                 key={link.name}
                 href={link.href}
-                onClick={() => setIsOpen(false)}
-                className="block text-gray-800 text-lg font-medium hover:text-blue-600 transition"
+                onClick={(e) => handleNavClick(e, link.href)}
+                className="block text-gray-800 text-lg font-medium hover:text-blue-600 transition cursor-pointer"
               >
                 {link.name}
-              </Link>
+              </a>
             ))}
 
             <div className="flex flex-col space-y-3">
