@@ -1,6 +1,8 @@
 import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
 import SafeHydration from "@/components/SafeHydration";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,7 +14,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// ✅ SEO Metadata
 export const metadata = {
   title: {
     default: "WorknConnect | Empowering Connections, Creating Opportunities 💼",
@@ -81,7 +82,7 @@ export const metadata = {
     },
   },
   verification: {
-    google: "YOUR_GOOGLE_VERIFICATION_CODE", // optional
+    google: "YOUR_GOOGLE_VERIFICATION_CODE",
   },
   other: {
     "application-name": "WorknConnect",
@@ -89,12 +90,10 @@ export const metadata = {
   },
 };
 
-// ✅ Move theme color to viewport export
 export const viewport = {
   themeColor: "#2563eb",
 };
 
-// ✅ Schema.org (Structured Data)
 const schemaData = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -127,7 +126,14 @@ export default function RootLayout({ children }) {
         suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-black`}
       >
-        <SafeHydration>{children}</SafeHydration>
+        {/* ✅ Wrap navbar + page in SafeHydration */}
+        <SafeHydration>
+          <Navbar />
+          {children}
+        </SafeHydration>
+
+        {/* ✅ Footer placed outside SafeHydration */}
+        <Footer />
       </body>
     </html>
   );

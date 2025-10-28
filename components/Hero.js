@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -75,26 +76,28 @@ export default function Hero() {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.9 }}
         >
-          <motion.a
-            href="/postjob"
-            whileHover={{ scale: 1.08 }}
-            className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-700
+          <Link href="/signup">
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              className="px-8 py-3 bg-gradient-to-r from-blue-600 to-indigo-700
                        hover:from-blue-700 hover:to-indigo-800
                        rounded-2xl text-lg font-semibold shadow-lg 
                        transition-all duration-300"
-          >
-            Post a Job
-          </motion.a>
+            >
+              Post a Job
+            </motion.button>
+          </Link>
 
-          <motion.a
-            href="/findjob"
-            whileHover={{ scale: 1.08 }}
-            className="px-8 py-3 bg-white/10 backdrop-blur-md 
+          <Link href="/signup">
+            <motion.button
+              whileHover={{ scale: 1.08 }}
+              className="px-8 py-3 bg-white/10 backdrop-blur-md 
                        border border-white/20 hover:bg-white/20
                        rounded-2xl text-lg font-semibold transition-all duration-300"
-          >
-            Find Jobs
-          </motion.a>
+            >
+              Find Jobs
+            </motion.button>
+          </Link>
         </motion.div>
       </motion.div>
 

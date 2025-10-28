@@ -10,7 +10,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const menuRef = useRef(null);
 
-  // Detect scroll for shadow effect
+  // ✅ Scroll shadow effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -19,7 +19,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close hamburger when clicking outside
+  // ✅ Close mobile menu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -48,13 +48,13 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-3">
-        {/* Logo */}
+        {/* ✅ Logo */}
         <Link href="/" className="flex items-center space-x-2">
           <div className="w-3 h-3 bg-blue-600 rounded-sm rotate-45"></div>
           <span className="text-xl font-semibold text-gray-900">WorknConnect</span>
         </Link>
 
-        {/* Desktop Navigation */}
+        {/* ✅ Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-10">
           {navLinks.map((link) => (
             <Link
@@ -66,16 +66,22 @@ export default function Navbar() {
             </Link>
           ))}
           <div className="flex items-center space-x-3">
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition">
+            <Link
+              href="/signup"
+              className="px-4 py-2 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition"
+            >
               Sign Up
-            </button>
-            <button className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium hover:bg-gray-200 transition">
+            </Link>
+            <Link
+              href="/login"
+              className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium hover:bg-gray-200 transition"
+            >
               Log In
-            </button>
+            </Link>
           </div>
         </div>
 
-        {/* Mobile Menu Button */}
+        {/* ✅ Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
@@ -84,14 +90,14 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Animated Divider Line */}
+      {/* ✅ Divider Line */}
       <motion.div
         className="h-0.5 bg-gray-200 w-full"
         animate={{ opacity: isScrolled ? 1 : 0.8 }}
         transition={{ duration: 0.3 }}
       />
 
-      {/* Mobile Menu */}
+      {/* ✅ Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -112,13 +118,22 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+
             <div className="flex flex-col space-y-3">
-              <button className="w-full py-2 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition">
+              <Link
+                href="/signup"
+                onClick={() => setIsOpen(false)}
+                className="w-full py-2 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition text-center"
+              >
                 Sign Up
-              </button>
-              <button className="w-full py-2 bg-gray-100 text-gray-800 rounded-full font-medium hover:bg-gray-200 transition">
+              </Link>
+              <Link
+                href="/login"
+                onClick={() => setIsOpen(false)}
+                className="w-full py-2 bg-gray-100 text-gray-800 rounded-full font-medium hover:bg-gray-200 transition text-center"
+              >
                 Log In
-              </button>
+              </Link>
             </div>
           </motion.div>
         )}
