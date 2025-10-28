@@ -6,95 +6,132 @@ export default function AboutUs() {
   return (
     <section
       id="about"
-      className="relative w-full py-12 sm:py-16 md:py-20 flex items-center justify-center text-center overflow-hidden"
+      className="relative w-full flex items-center justify-center text-center overflow-hidden py-16 sm:py-20 md:py-24 bg-gradient-to-b from-black via-gray-950 to-gray-900"
     >
-      {/* ✅ Background Image */}
-      <div className="absolute inset-0">
+      {/* 🌄 Mobile Background */}
+      <div className="absolute inset-0 block md:hidden">
         <Image
-          src="/images/aboutt.jpg"
-          alt="Team collaborating representing the WorknConnect mission"
+          src="/images/mobile.jpg"
+          alt="Team collaboration representing unity and purpose"
           fill
           priority
           quality={90}
-          sizes="100vw"
-          className="object-cover object-center brightness-75"
+          className="object-cover object-center opacity-50"
         />
-        {/* ✅ Overlay for readability */}
-        <div className="absolute inset-0 bg-black/40 md:bg-black/50"></div>
       </div>
 
-      {/* ✅ Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-5 sm:px-6 text-white">
+      {/* 💻 Desktop Background */}
+      <div className="absolute inset-0 hidden md:block">
+        <Image
+          src="/images/big.jpg"
+          alt="Team unity, support, and empowerment background"
+          fill
+          priority
+          quality={90}
+          className="object-cover object-center opacity-50"
+        />
+      </div>
+
+      {/* 🔮 Overlay Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent"></div>
+
+      {/* 💬 Main Content */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 text-white">
+        {/* Section Heading */}
         <motion.h2
-          className="text-2xl sm:text-3xl md:text-5xl font-extrabold mb-3 sm:mb-4"
-          initial={{ opacity: 0, y: 25 }}
+          className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-5 sm:mb-6 bg-gradient-to-r from-blue-400 via-indigo-400 to-blue-500 bg-clip-text text-transparent"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.8 }}
         >
-          About <span className="text-blue-400">WorknConnect</span>
+          About WorknConnect
         </motion.h2>
 
+        {/* Intro Paragraph */}
         <motion.p
-          className="text-sm sm:text-base md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          <strong>WorknConnect</strong> isn’t just a job portal — it’s a vision
-          to empower India’s workforce by creating trust, opportunity, and
-          long-term growth. We bring people, purpose, and progress together.
+          <strong className="text-blue-400">WorknConnect</strong> is a 
+          <span className="text-indigo-400 font-semibold"> people-powered job network </span> 
+          designed to empower every individual — from local workers to national talent.  
+          We believe that <span className="text-blue-400 font-semibold">opportunity should never be limited by background, literacy, or social reach</span>.  
+          Our goal is simple: connect hearts before resumes.
         </motion.p>
 
+        {/* Visionary Statement */}
         <motion.p
-          className="text-sm sm:text-base md:text-xl text-gray-200 mt-5 sm:mt-8 max-w-3xl mx-auto leading-relaxed"
+          className="text-base sm:text-lg md:text-xl text-gray-300 mt-6 sm:mt-8 max-w-3xl mx-auto leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Our platform connects dreamers and doers — where{" "}
-          <span className="text-blue-400 font-semibold">work meets purpose</span>{" "}
-          and ambition transforms into achievement. Together, we’re building a
-          sustainable, connected digital economy for the next generation.
+          We are not just building a platform — we are building a movement for 
+          <span className="text-blue-400 font-semibold"> trust, inclusion, and dignity in work</span>.  
+          Whether you are a student, shop owner, skilled worker, or organization,  
+          <span className="text-indigo-400"> WorknConnect</span> helps you grow, connect, and create impact that lasts a lifetime.
         </motion.p>
 
-        {/* ✅ Mission, Vision, Promise Cards */}
+        {/* ✨ Mission - Vision - Promise Cards */}
         <motion.div
-          className="mt-10 sm:mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 text-left"
+          className="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-left"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.3 }}
         >
-          <div className="bg-white/15 backdrop-blur-lg border border-white/20 p-5 sm:p-6 rounded-2xl shadow-lg hover:bg-white/25 transition-all duration-300">
-            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-blue-300 mb-2">
-              Our Mission
+          {/* Mission Card */}
+          <div className="group bg-white/10 backdrop-blur-lg border border-white/20 p-6 rounded-2xl shadow-xl hover:bg-white/15 transition-all duration-300 hover:scale-[1.02]">
+            <h3 className="text-lg md:text-xl font-semibold mb-2 text-blue-300 group-hover:text-blue-400 transition-all">
+              🌍 Our Mission
             </h3>
-            <p className="text-gray-100 text-xs sm:text-sm md:text-base leading-relaxed">
-              To create a transparent digital ecosystem that bridges opportunity
-              and talent — empowering everyone to connect, work, and grow with
-              trust and innovation.
+            <p className="text-gray-200 text-sm sm:text-base leading-relaxed">
+              To empower every person by breaking barriers between <strong>talent</strong> and 
+              <strong> opportunity</strong>. We’re crafting a transparent, trusted, and 
+              <span className="text-blue-400 font-semibold"> human-first digital ecosystem</span> 
+              where growth belongs to everyone.
             </p>
           </div>
 
-          <div className="bg-white/15 backdrop-blur-lg border border-white/20 p-5 sm:p-6 rounded-2xl shadow-lg hover:bg-white/25 transition-all duration-300">
-            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-blue-300 mb-2">
-              Our Vision
+          {/* Vision Card */}
+          <div className="group bg-white/10 backdrop-blur-lg border border-white/20 p-6 rounded-2xl shadow-xl hover:bg-white/15 transition-all duration-300 hover:scale-[1.02]">
+            <h3 className="text-lg md:text-xl font-semibold mb-2 text-blue-300 group-hover:text-blue-400 transition-all">
+              🚀 Our Vision
             </h3>
-            <p className="text-gray-100 text-xs sm:text-sm md:text-base leading-relaxed">
-              To be India’s most trusted platform for collaboration and career
-              development — helping millions build meaningful and lasting
-              professional connections.
+            <p className="text-gray-200 text-sm sm:text-base leading-relaxed">
+              To build a nation where <strong>no effort goes unnoticed</strong> and 
+              <strong> every skill finds purpose</strong>.  
+              Our vision is a connected India, where every person becomes part of a 
+              <span className="text-indigo-400 font-semibold"> sustainable future of work</span>.
             </p>
           </div>
 
-          <div className="bg-white/15 backdrop-blur-lg border border-white/20 p-5 sm:p-6 rounded-2xl shadow-lg hover:bg-white/25 transition-all duration-300 sm:col-span-2 lg:col-span-1 mx-auto">
-            <h3 className="text-base sm:text-lg md:text-xl font-semibold text-blue-300 mb-2">
-              Our Promise
+          {/* Promise Card */}
+          <div className="group bg-white/10 backdrop-blur-lg border border-white/20 p-6 rounded-2xl shadow-xl hover:bg-white/15 transition-all duration-300 hover:scale-[1.02] sm:col-span-2 lg:col-span-1 mx-auto">
+            <h3 className="text-lg md:text-xl font-semibold mb-2 text-blue-300 group-hover:text-blue-400 transition-all">
+              💙 Our Promise
             </h3>
-            <p className="text-gray-100 text-xs sm:text-sm md:text-base leading-relaxed">
-              We stand for equality, innovation, and empowerment — ensuring
-              every individual feels valued, connected, and inspired to grow.
+            <p className="text-gray-200 text-sm sm:text-base leading-relaxed">
+              We promise to stay <strong>people-first</strong>, transparent, and innovative.  
+              <span className="text-blue-400 font-semibold"> WorknConnect</span> will always stand 
+              beside dreamers, doers, and believers — because we don’t just connect jobs,  
+              <span className="text-indigo-400 font-semibold"> we connect lives and build futures.</span>
             </p>
           </div>
+        </motion.div>
+
+        {/* 💡 Closing Tagline */}
+        <motion.div
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
+          <p className="text-lg sm:text-xl text-gray-200 font-medium">
+            Together, we’re building a <span className="text-blue-400 font-semibold">future of work</span>  
+            that is <span className="text-indigo-400 font-semibold">accessible, inclusive, and human.</span>
+          </p>
         </motion.div>
       </div>
     </section>
