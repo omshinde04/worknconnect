@@ -3,6 +3,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Mail, Phone, Send, HeartHandshake } from "lucide-react";
+import Head from "next/head";
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -19,9 +20,7 @@ export default function ContactSection() {
     show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 70 } },
   };
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,7 +42,7 @@ export default function ContactSection() {
         setStatus("❌ Failed to send message.");
         setStatusType("error");
       }
-    } catch (err) {
+    } catch {
       setStatus("❌ Error sending message.");
       setStatusType("error");
     }
@@ -57,166 +56,207 @@ export default function ContactSection() {
   }, [status]);
 
   return (
-    <section
-      id="contact"
-      className="relative bg-black text-white px-6 py-28 overflow-hidden"
-    >
-      {/* Background Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.2),transparent_70%)] blur-3xl opacity-60"></div>
-      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-indigo-500/10 blur-3xl rounded-full"></div>
-      <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-blue-400/10 blur-3xl rounded-full"></div>
+    <>
+      {/* SEO Meta Tags */}
+      <Head>
+        <title>Contact WorknConnect | Connect with Us</title>
+        <meta
+          name="description"
+          content="Get in touch with WorknConnect. Whether you're an employer, job seeker, or partner, let's collaborate to build opportunities and connect people with purpose."
+        />
+        <meta
+          name="keywords"
+          content="WorknConnect contact, job platform India, work opportunities, connect with WorknConnect, collaborate with WorknConnect"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content="Contact WorknConnect | Connect with Us" />
+        <meta
+          property="og:description"
+          content="Contact WorknConnect — we help employers and job seekers connect and collaborate for a better work future."
+        />
+        <meta property="og:image" content="/images/contact-preview.jpg" />
+        <meta property="og:url" content="https://worknconnect.in/contact" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Head>
 
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9 }}
-        className="max-w-6xl mx-auto relative z-10 bg-[#0F0F10]/90 backdrop-blur-lg 
-                   rounded-2xl shadow-2xl p-10 md:p-16 border border-white/10"
+      {/* Contact Section */}
+      <section
+        id="contact"
+        className="relative bg-black text-white px-6 py-28 overflow-hidden"
+        aria-labelledby="contact-heading"
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left Section */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-6"
-          >
-            <motion.button
-              whileHover={{
-                scale: 1.08,
-                backgroundColor: "rgb(99,102,241)",
-                color: "#fff",
-              }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 bg-white text-black text-sm font-semibold rounded-md shadow-md"
-            >
-              Let’s Collaborate
-            </motion.button>
+        {/* Background Glow */}
+        <div
+          className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(99,102,241,0.2),transparent_70%)] blur-3xl opacity-60"
+          aria-hidden="true"
+        ></div>
+        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-indigo-500/10 blur-3xl rounded-full"></div>
+        <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-blue-400/10 blur-3xl rounded-full"></div>
 
-            <h2 className="text-3xl md:text-5xl font-extrabold leading-snug text-white">
-              Let’s Shape <br /> the Future of Work <br /> Together 🤝
-            </h2>
-
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9 }}
+          className="max-w-6xl mx-auto relative z-10 bg-[#0F0F10]/90 backdrop-blur-lg 
+                     rounded-2xl shadow-2xl p-10 md:p-16 border border-white/10"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            {/* Left Section */}
             <motion.div
-              initial={{ scaleX: 0 }}
-              whileInView={{ scaleX: 1 }}
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
-              className="w-28 h-1 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full origin-left"
-            />
-
-            <p className="text-gray-400 text-base leading-relaxed">
-              Whether you're an employer, job seeker, or community partner — WorknConnect
-              bridges the gap between talent and opportunity. Reach out to us anytime to
-              collaborate, share ideas, or grow together.
-            </p>
-
-            <div className="text-gray-300 text-sm md:text-base space-y-2">
-              <p className="flex items-center gap-2">
-                <Phone className="w-5 h-5 text-indigo-400" />
-                <a href="tel:+919373545159" className="hover:text-indigo-400">
-                  +91 9373545159
-                </a>
-              </p>
-              <p className="flex items-center gap-2">
-                <Mail className="w-5 h-5 text-indigo-400" />
-                <a
-                  href="mailto:shindeom052@gmail.com"
-                  className="hover:text-indigo-400"
-                >
-                  shindeom052@gmail.com
-                </a>
-              </p>
-              <p>⏰ Monday to Saturday — 9 AM to 7 PM</p>
-            </div>
-          </motion.div>
-
-          {/* Right Section - Contact Form */}
-          <motion.form
-            variants={container}
-            initial="hidden"
-            whileInView="show"
-            onSubmit={handleSubmit}
-            className="space-y-4 relative"
-          >
-            <motion.input
-              variants={item}
-              type="text"
-              name="name"
-              value={form.name}
-              onChange={handleChange}
-              placeholder="Your Name"
-              required
-              className="w-full px-4 py-3 bg-transparent border border-gray-700 rounded-md text-sm focus:outline-none focus:border-indigo-500 transition"
-            />
-            <motion.input
-              variants={item}
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-              placeholder="Your Email"
-              required
-              className="w-full px-4 py-3 bg-transparent border border-gray-700 rounded-md text-sm focus:outline-none focus:border-indigo-500 transition"
-            />
-            <motion.textarea
-              variants={item}
-              name="message"
-              value={form.message}
-              onChange={handleChange}
-              placeholder="Your Message"
-              rows="4"
-              required
-              className="w-full px-4 py-3 bg-transparent border border-gray-700 rounded-md text-sm focus:outline-none focus:border-indigo-500 transition resize-none"
-            />
-            <motion.button
-              variants={item}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 0 30px rgba(99,102,241,0.6)",
-              }}
-              whileTap={{ scale: 0.95 }}
-              type="submit"
-              className="w-full bg-gradient-to-r from-indigo-600 to-emerald-500 text-white py-3 rounded-md font-semibold shadow-md transition"
+              className="space-y-6"
             >
-              <Send className="w-4 h-4 inline-block mr-2" />
-              Send Message
-            </motion.button>
+              <motion.button
+                whileHover={{
+                  scale: 1.08,
+                  backgroundColor: "rgb(99,102,241)",
+                  color: "#fff",
+                }}
+                whileTap={{ scale: 0.95 }}
+                className="px-6 py-2 bg-white text-black text-sm font-semibold rounded-md shadow-md"
+                aria-label="Collaborate with WorknConnect"
+              >
+                Let’s Collaborate
+              </motion.button>
 
-            {/* Success/Error Status */}
-            <AnimatePresence>
-              {status && (
-                <motion.p
-                  key="status"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.4 }}
-                  className={`text-sm font-medium mt-2 ${
-                    statusType === "success"
-                      ? "text-green-400"
-                      : statusType === "error"
-                      ? "text-red-400"
-                      : "text-gray-400"
-                  }`}
-                >
-                  {status}
-                </motion.p>
-              )}
-            </AnimatePresence>
-          </motion.form>
-        </div>
+              <h2
+                id="contact-heading"
+                className="text-3xl md:text-5xl font-extrabold leading-snug text-white"
+              >
+                Let’s Shape <br /> the Future of Work <br /> Together 🤝
+              </h2>
 
-        {/* Humanity Message */}
-        <div className="mt-16 text-center space-y-3">
-          <HeartHandshake className="w-8 h-8 mx-auto text-indigo-400" />
-          <p className="text-xl font-semibold text-gray-200">
-            WorknConnect — Connecting People with Purpose 🌍
-          </p>
-          <p className="text-gray-400 text-sm max-w-2xl mx-auto">
-            Together, we’re building a community where work meets trust and growth never stops.
-          </p>
-        </div>
-      </motion.div>
-    </section>
+              <motion.div
+                initial={{ scaleX: 0 }}
+                whileInView={{ scaleX: 1 }}
+                transition={{ duration: 0.8 }}
+                className="w-28 h-1 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full origin-left"
+                aria-hidden="true"
+              />
+
+              <p className="text-gray-400 text-base leading-relaxed">
+                WorknConnect bridges the gap between <strong>talent</strong> and
+                <strong> opportunity</strong>. Reach out to us anytime to collaborate,
+                share ideas, or grow together.
+              </p>
+
+              {/* Contact Info */}
+              <address className="text-gray-300 text-sm md:text-base space-y-2 not-italic">
+                <p className="flex items-center gap-2">
+                  <Phone className="w-5 h-5 text-indigo-400" aria-hidden="true" />
+                  <a href="tel:+919373545159" className="hover:text-indigo-400">
+                    +91 9373545159
+                  </a>
+                </p>
+                <p className="flex items-center gap-2">
+                  <Mail className="w-5 h-5 text-indigo-400" aria-hidden="true" />
+                  <a
+                    href="mailto:shindeom052@gmail.com"
+                    className="hover:text-indigo-400"
+                  >
+                    shindeom052@gmail.com
+                  </a>
+                </p>
+                <p>⏰ Monday to Saturday — 9 AM to 7 PM</p>
+              </address>
+            </motion.div>
+
+            {/* Contact Form */}
+            <motion.form
+              variants={container}
+              initial="hidden"
+              whileInView="show"
+              onSubmit={handleSubmit}
+              className="space-y-4 relative"
+              aria-label="Contact form"
+            >
+              <motion.input
+                variants={item}
+                type="text"
+                name="name"
+                value={form.name}
+                onChange={handleChange}
+                placeholder="Your Name"
+                required
+                aria-label="Your Name"
+                className="w-full px-4 py-3 bg-transparent border border-gray-700 rounded-md text-sm focus:outline-none focus:border-indigo-500 transition"
+              />
+              <motion.input
+                variants={item}
+                type="email"
+                name="email"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="Your Email"
+                required
+                aria-label="Your Email"
+                className="w-full px-4 py-3 bg-transparent border border-gray-700 rounded-md text-sm focus:outline-none focus:border-indigo-500 transition"
+              />
+              <motion.textarea
+                variants={item}
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                placeholder="Your Message"
+                rows="4"
+                required
+                aria-label="Your Message"
+                className="w-full px-4 py-3 bg-transparent border border-gray-700 rounded-md text-sm focus:outline-none focus:border-indigo-500 transition resize-none"
+              />
+              <motion.button
+                variants={item}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 0 30px rgba(99,102,241,0.6)",
+                }}
+                whileTap={{ scale: 0.95 }}
+                type="submit"
+                className="w-full bg-gradient-to-r from-indigo-600 to-emerald-500 text-white py-3 rounded-md font-semibold shadow-md transition"
+                aria-label="Send Message"
+              >
+                <Send className="w-4 h-4 inline-block mr-2" aria-hidden="true" />
+                Send Message
+              </motion.button>
+
+              {/* Status Messages */}
+              <AnimatePresence>
+                {status && (
+                  <motion.p
+                    key="status"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4 }}
+                    className={`text-sm font-medium mt-2 ${
+                      statusType === "success"
+                        ? "text-green-400"
+                        : statusType === "error"
+                        ? "text-red-400"
+                        : "text-gray-400"
+                    }`}
+                    role="status"
+                  >
+                    {status}
+                  </motion.p>
+                )}
+              </AnimatePresence>
+            </motion.form>
+          </div>
+
+          {/* Humanity Message */}
+          <div className="mt-16 text-center space-y-3">
+            <HeartHandshake className="w-8 h-8 mx-auto text-indigo-400" aria-hidden="true" />
+            <p className="text-xl font-semibold text-gray-200">
+              WorknConnect — Connecting People with Purpose 🌍
+            </p>
+            <p className="text-gray-400 text-sm max-w-2xl mx-auto">
+              Together, we’re building a community where work meets trust and growth never stops.
+            </p>
+          </div>
+        </motion.div>
+      </section>
+    </>
   );
 }

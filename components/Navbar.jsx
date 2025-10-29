@@ -40,7 +40,6 @@ export default function Navbar() {
     }
 
     if (pathname !== "/") {
-      // redirect to home and pass section hash
       router.push(`/${href}`);
     } else {
       const element = document.querySelector(href);
@@ -52,11 +51,12 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
+  // ✅ Accessible, SEO-friendly link list
   const navLinks = [
-    { name: "Home", href: "/" },
-    { name: "How it Works", href: "#how" },
-    { name: "About Us", href: "#about" },
-    { name: "Contact", href: "#contact" },
+    { name: "Home", href: "/", title: "Go to WorknConnect Home Page" },
+    { name: "How it Works", href: "#how", title: "Learn How WorknConnect Works" },
+    { name: "About Us", href: "#about", title: "About WorknConnect Platform" },
+    { name: "Contact", href: "#contact", title: "Contact WorknConnect Team" },
   ];
 
   return (
@@ -67,12 +67,23 @@ export default function Navbar() {
       className={`fixed top-0 w-full z-50 bg-white transition-all duration-300 ${
         isScrolled ? "shadow-sm border-b border-gray-200" : "border-b border-gray-100"
       }`}
+      role="navigation"
+      aria-label="Main Navigation"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 md:px-10 py-3">
-        {/* ✅ Logo */}
-        <Link href="/" className="flex items-center space-x-2">
-          <div className="w-3 h-3 bg-blue-600 rounded-sm rotate-45"></div>
-          <span className="text-xl font-semibold text-gray-900">WorknConnect</span>
+        {/* ✅ SEO Logo Section */}
+        <Link
+          href="/"
+          className="flex items-center space-x-2"
+          aria-label="WorknConnect Homepage"
+        >
+          <div
+            className="w-3 h-3 bg-blue-600 rounded-sm rotate-45"
+            aria-hidden="true"
+          ></div>
+          <span className="text-xl font-semibold text-gray-900 tracking-tight">
+            WorknConnect
+          </span>
         </Link>
 
         {/* ✅ Desktop Navigation */}
@@ -82,7 +93,9 @@ export default function Navbar() {
               key={link.name}
               href={link.href}
               onClick={(e) => handleNavClick(e, link.href)}
-              className="text-gray-700 hover:text-blue-600 font-medium transition-colors cursor-pointer"
+              title={link.title}
+              aria-label={link.title}
+              className="text-gray-700 hover:text-blue-600 font-medium transition-colors cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-md"
             >
               {link.name}
             </a>
@@ -90,13 +103,15 @@ export default function Navbar() {
           <div className="flex items-center space-x-3">
             <Link
               href="/signup"
-              className="px-4 py-2 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition"
+              title="Create an account on WorknConnect"
+              className="px-4 py-2 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
             >
               Sign Up
             </Link>
             <Link
               href="/login"
-              className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium hover:bg-gray-200 transition"
+              title="Log in to your WorknConnect account"
+              className="px-4 py-2 bg-gray-100 text-gray-800 rounded-full font-medium hover:bg-gray-200 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
             >
               Log In
             </Link>
@@ -106,7 +121,9 @@ export default function Navbar() {
         {/* ✅ Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition"
+          aria-label={isOpen ? "Close Menu" : "Open Menu"}
+          aria-expanded={isOpen}
+          className="md:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -135,7 +152,9 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className="block text-gray-800 text-lg font-medium hover:text-blue-600 transition cursor-pointer"
+                title={link.title}
+                aria-label={link.title}
+                className="block text-gray-800 text-lg font-medium hover:text-blue-600 transition cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 rounded-md"
               >
                 {link.name}
               </a>
@@ -145,14 +164,16 @@ export default function Navbar() {
               <Link
                 href="/signup"
                 onClick={() => setIsOpen(false)}
-                className="w-full py-2 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition text-center"
+                title="Create an account on WorknConnect"
+                className="w-full py-2 bg-blue-500 text-white rounded-full font-medium hover:bg-blue-600 transition text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
                 Sign Up
               </Link>
               <Link
                 href="/login"
                 onClick={() => setIsOpen(false)}
-                className="w-full py-2 bg-gray-100 text-gray-800 rounded-full font-medium hover:bg-gray-200 transition text-center"
+                title="Log in to your WorknConnect account"
+                className="w-full py-2 bg-gray-100 text-gray-800 rounded-full font-medium hover:bg-gray-200 transition text-center focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400"
               >
                 Log In
               </Link>
