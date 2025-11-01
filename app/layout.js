@@ -124,15 +124,20 @@ export default function RootLayout({ children }) {
       </head>
       <body
         suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white dark:bg-black`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black text-white overflow-x-hidden`}
       >
-        {/* ✅ Wrap navbar + page in SafeHydration */}
+        {/* ✅ Hydrate content safely */}
         <SafeHydration>
-          <Navbar />
-          {children}
+          {/* ✅ Page Content */}
+          <main className="relative min-h-screen flex flex-col justify-between">
+            {children}
+
+            {/* ✅ Fixed bottom Navbar */}
+            <Navbar />
+          </main>
         </SafeHydration>
 
-        {/* ✅ Footer placed outside SafeHydration */}
+        {/* ✅ Footer below everything */}
         <Footer />
       </body>
     </html>

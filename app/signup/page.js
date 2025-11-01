@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Head from "next/head";
-import { Mail, Lock, User, ArrowRight } from "lucide-react";
+import { Mail, Lock, User, ArrowRight, CheckCircle2, XCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function Signup() {
@@ -18,6 +18,7 @@ export default function Signup() {
   });
 
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => setForm((s) => ({ ...s, [e.target.name]: e.target.value }));
@@ -26,6 +27,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
 
     if (!form.fullName.trim() || !form.email.trim() || !form.password) {
       setError("Please fill all required fields.");
@@ -38,11 +40,34 @@ export default function Signup() {
 
     setLoading(true);
     try {
-      await new Promise((resolve) => setTimeout(resolve, 800));
-      form.role === "poster" ? router.push("/jobposter") : router.push("/jobseeker");
+      const res = await fetch("/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: form.fullName,
+          email: form.email,
+          password: form.password,
+          role: form.role,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Signup failed. Please try again.");
+        return;
+      }
+
+      // ✅ Show success message with redirect info
+      setSuccess("🎉 Account created successfully! Redirecting to login page...");
+
+      // ⏳ Delay redirect for smooth UX
+      setTimeout(() => {
+        router.push("/login");
+      }, 2500);
     } catch (err) {
       console.error(err);
-      setError("Failed to create account. Try again later.");
+      setError("Something went wrong. Please try again later.");
     } finally {
       setLoading(false);
     }
@@ -63,36 +88,10 @@ export default function Signup() {
         />
         <meta name="author" content="Om Vilas Shinde, CEO of WorknConnect" />
         <link rel="canonical" href="https://worknconnect.vercel.app/signup" />
-
-        {/* 🔹 Schema.org (JSON-LD) for SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "WebPage",
-              name: "WorknConnect Signup Page",
-              description:
-                "Register with WorknConnect to find jobs or post hiring opportunities. Empowering seekers and employers to connect easily.",
-              url: "https://worknconnect.vercel.app/signup",
-              publisher: {
-                "@type": "Organization",
-                name: "WorknConnect",
-                logo: {
-                  "@type": "ImageObject",
-                  url: "https://worknconnect.vercel.app/logo.png",
-                },
-              },
-            }),
-          }}
-        />
       </Head>
 
       {/* 🧭 Main Signup Section */}
-      <main
-        className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden"
-        aria-label="Sign up page for WorknConnect job platform"
-      >
+      <main className="min-h-screen bg-black flex items-center justify-center relative overflow-hidden">
         {/* Background Effects */}
         <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-indigo-500/10 blur-3xl rounded-full pointer-events-none"></div>
         <div className="absolute bottom-0 right-0 w-1/3 h-1/3 bg-emerald-400/10 blur-3xl rounded-full pointer-events-none"></div>
@@ -113,6 +112,28 @@ export default function Signup() {
             — bridge opportunities and skills across India.
           </p>
 
+          {/* ✅ Success or Error Alerts */}
+          {success && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-2 text-green-400 bg-green-900/30 border border-green-700 rounded-md px-3 py-2 mb-4 text-sm"
+            >
+              <CheckCircle2 size={18} />
+              {success}
+            </motion.div>
+          )}
+          {error && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center gap-2 text-red-400 bg-red-900/30 border border-red-700 rounded-md px-3 py-2 mb-4 text-sm"
+            >
+              <XCircle size={18} />
+              {error}
+            </motion.div>
+          )}
+
           {/* Role Selector */}
           <fieldset className="mb-6 text-center">
             <legend className="sr-only">Choose account role</legend>
@@ -121,20 +142,18 @@ export default function Signup() {
                 type="button"
                 onClick={() => handleRoleSelect("finder")}
                 aria-pressed={form.role === "finder"}
-                aria-label="Select job seeker role"
                 className={`px-4 py-2 rounded-full font-medium text-sm transition ${
                   form.role === "finder"
                     ? "bg-gradient-to-r from-indigo-600 to-emerald-500 text-white shadow-lg"
                     : "bg-gray-800 text-gray-300 border border-gray-700 hover:bg-gray-800/90"
                 }`}
               >
-                Job Seeker
+                Job Finder
               </button>
               <button
                 type="button"
                 onClick={() => handleRoleSelect("poster")}
                 aria-pressed={form.role === "poster"}
-                aria-label="Select job poster role"
                 className={`px-4 py-2 rounded-full font-medium text-sm transition ${
                   form.role === "poster"
                     ? "bg-gradient-to-r from-indigo-600 to-emerald-500 text-white shadow-lg"
@@ -147,11 +166,7 @@ export default function Signup() {
           </fieldset>
 
           {/* Signup Form */}
-          <form className="space-y-4" onSubmit={handleSubmit} aria-label="Signup form">
-            {/* Full Name */}
-            <label htmlFor="fullName" className="sr-only">
-              Full Name
-            </label>
+          <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="relative">
               <User className="absolute left-3 top-3 text-indigo-400" size={18} />
               <input
@@ -166,10 +181,6 @@ export default function Signup() {
               />
             </div>
 
-            {/* Email */}
-            <label htmlFor="email" className="sr-only">
-              Email Address
-            </label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 text-indigo-400" size={18} />
               <input
@@ -184,10 +195,6 @@ export default function Signup() {
               />
             </div>
 
-            {/* Password */}
-            <label htmlFor="password" className="sr-only">
-              Password
-            </label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 text-indigo-400" size={18} />
               <input
@@ -203,10 +210,6 @@ export default function Signup() {
               />
             </div>
 
-            {/* Confirm Password */}
-            <label htmlFor="confirmPassword" className="sr-only">
-              Confirm Password
-            </label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 text-indigo-400" size={18} />
               <input
@@ -221,18 +224,15 @@ export default function Signup() {
               />
             </div>
 
-            {error && <p className="text-sm text-red-400 mt-1">{error}</p>}
-
             {/* Submit Button */}
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={loading}
-              aria-label="Create your WorknConnect account"
               className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-indigo-600 to-emerald-500 text-white py-3 rounded-md font-semibold shadow-md hover:shadow-lg transition-all"
             >
-              {loading ? "Creating..." : "Sign Up"}
+              {loading ? "Creating Account..." : "Sign Up"}
               <ArrowRight size={18} />
             </motion.button>
           </form>
@@ -243,7 +243,6 @@ export default function Signup() {
             <Link
               href="/login"
               className="text-indigo-400 hover:text-emerald-400 font-semibold"
-              aria-label="Go to login page"
             >
               Login here
             </Link>
